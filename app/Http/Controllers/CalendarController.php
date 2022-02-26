@@ -2,48 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Calendar;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
+use App\Models\Calendar;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Response;
 
 class CalendarController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $events = Calendar::all();
+        return view('welcome', compact('events'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCalendarRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreCalendarRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreCalendarRequest $request)
     {
-        //
+        Calendar::create($request->validated());
+        return to_route('calendar.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Calendar  $calendar
-     * @return \Illuminate\Http\Response
+     * @param Calendar $calendar
+     * @return Response
      */
     public function show(Calendar $calendar)
     {
@@ -53,8 +49,8 @@ class CalendarController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Calendar  $calendar
-     * @return \Illuminate\Http\Response
+     * @param Calendar $calendar
+     * @return Response
      */
     public function edit(Calendar $calendar)
     {
@@ -64,9 +60,9 @@ class CalendarController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCalendarRequest  $request
-     * @param  \App\Models\Calendar  $calendar
-     * @return \Illuminate\Http\Response
+     * @param UpdateCalendarRequest $request
+     * @param Calendar $calendar
+     * @return Response
      */
     public function update(UpdateCalendarRequest $request, Calendar $calendar)
     {
@@ -76,8 +72,8 @@ class CalendarController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Calendar  $calendar
-     * @return \Illuminate\Http\Response
+     * @param Calendar $calendar
+     * @return Response
      */
     public function destroy(Calendar $calendar)
     {

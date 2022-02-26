@@ -13,7 +13,7 @@ class StoreCalendarRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreCalendarRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "title" => "required",
+            "description" =>"required",
+            "color" => "required",
+            "status" => "required",
+            "start" => "required",
+            "end" => "required",
         ];
     }
 }
