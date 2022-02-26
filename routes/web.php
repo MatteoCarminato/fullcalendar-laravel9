@@ -19,3 +19,4 @@ Route::get('/', function () {
 });
 
 Route::resource('calendar', CalendarController::class)->except(['create']);
+Route::get('getevents', [CalendarController::class, 'getEvents'])->name('getEvents');

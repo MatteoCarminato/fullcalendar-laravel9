@@ -51,7 +51,7 @@
                     center: 'title',
                     right: 'resourceTimeGridDay,resourceTimeGridWeek,dayGridMonth'
                 },
-                events: "{{ route('calendar.index') }}",
+                events: "{{ route('getEvents') }}",
                 dateClick: function (info) {
                     var start = moment(info.startStr).format('YYYY-MM-DD\THH:mm');
                     var end = moment(info.startStr).add(30, 'minutes').format('YYYY-MM-DD\THH:mm');

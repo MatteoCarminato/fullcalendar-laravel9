@@ -10,6 +10,8 @@ class Calendar extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public $timestamps = TRUE;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,4 +25,5 @@ class Calendar extends Model
         'status',
         'color',
     ];
+
 }

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetCalendarRequest;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
+use App\Http\Resources\CalendarCollection;
 use App\Models\Calendar;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
 class CalendarController extends Controller
@@ -19,15 +22,14 @@ class CalendarController extends Controller
      */
     public function index()
     {
-        $events = Calendar::all();
-        return view('welcome', compact('events'));
+        return view('welcome');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param StoreCalendarRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(StoreCalendarRequest $request)
     {
@@ -78,5 +80,13 @@ class CalendarController extends Controller
     public function destroy(Calendar $calendar)
     {
         //
+    }
+
+    public function getEvents(GetCalendarRequest $request)
+    {
+        $date = $request->validated();
+        return Calendar::whereDate('start', '>=', $date['start'])
+            ->whereDate('end', '<=', $date['end'])
+            ->get();
     }
 }
