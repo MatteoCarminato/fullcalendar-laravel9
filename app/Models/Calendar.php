@@ -24,6 +24,7 @@ class Calendar extends Model
         'description',
         'status',
         'color',
+        'resourceId'
     ];
 
 }

@@ -30,6 +30,7 @@ class StoreCalendarRequest extends FormRequest
             "status" => "required",
             "start" => "required",
             "end" => "required",
+            "resourceId" => "required"
         ];
     }
 }

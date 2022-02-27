@@ -53,8 +53,8 @@
                 },
                 events: "{{ route('getEvents') }}",
                 dateClick: function (info) {
-                    var start = moment(info.startStr).format('YYYY-MM-DD\THH:mm');
-                    var end = moment(info.startStr).add(30, 'minutes').format('YYYY-MM-DD\THH:mm');
+                    var start = moment(info.dateStr).format('YYYY-MM-DD\THH:mm');
+                    var end = moment(info.dateStr).add(30, 'minutes').format('YYYY-MM-DD\THH:mm');
 
                     document.getElementById('create-start').value = start;
                     document.getElementById('create-end').value = end;
@@ -117,6 +117,13 @@
                             <option value="1">Pending</option>
                             <option value="2">Confirmed</option>
                             <option value="3">Canceled</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleColorInput" class="form-label">Resource</label>
+                        <select class="form-select" aria-label="Default select example" name="resourceId" required>
+                            <option value="a">A</option>
+                            <option value="b">B</option>
                         </select>
                     </div>
                     <div class="mb-3">

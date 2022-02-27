@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('status')->nullable();
             $table->string('color')->nullable();
+            $table->string('resourceId')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
