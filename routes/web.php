@@ -18,9 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('calendar', CalendarController::class)->only(['index','edit','store']);
 Route::controller(CalendarController::class)->group(function () {
-    Route::resource('calendar', CalendarController::class)->only(['index','edit','store']);
     Route::get('getevents','getEvents')->name('calendar.getevents');
     Route::put('update/events','updateEvents')->name('calendar.updateevents');
+    Route::post('resize/events','resizeEvents')->name('calendar.resizeevents');
+    Route::post('drop/events','dropEvents')->name('calendar.dropevents');
 });
 

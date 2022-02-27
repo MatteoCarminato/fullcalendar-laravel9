@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DropCalendarRequest;
 use App\Http\Requests\GetCalendarRequest;
+use App\Http\Requests\ResizeCalendarRequest;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
 use App\Http\Resources\CalendarCollection;
@@ -60,6 +62,23 @@ class CalendarController extends Controller
     {
         Calendar::where('id', $request->id)
             ->update($request->validated());
+
+        return to_route('calendar.index');
+    }
+
+    public function resizeEvents(ResizeCalendarRequest $request)
+    {
+        Calendar::where('id', $request->id)
+            ->update($request->validated());
+
+        return to_route('calendar.index');
+    }
+
+    public function dropEvents(DropCalendarRequest $request)
+    {
+        Calendar::where('id', $request->id)
+            ->update($request->validated());
+
         return to_route('calendar.index');
     }
 }

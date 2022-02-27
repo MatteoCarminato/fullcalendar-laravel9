@@ -83,11 +83,52 @@
                     });
                 },
                 eventDrop: function (info) {
-                    alert('clicked ' + info.dateStr);
+                    if (!confirm("Você solicitou a alteração: " + info.event.title +
+                        "\nO evento será alterado para a data: " + moment(info.event.startStr).format(
+                            'DD-MM-YYYY HH:mm:ss')))
+                    {
+                        info.revert();
+                    } else {
+                        console.log(info)
+                        let id_event = info.event._def['publicId'];
+                        let _token = document.getElementsByName("_token")[0].value;
+                        let start = moment(info.event.startStr).format('YYYY-MM-DD\THH:mm');
+                        let end = moment(info.event.endStr).format('YYYY-MM-DD\THH:mm');
+                        let resource = info.event._def.resourceIds[0];
+                        $.ajax({
+                            url: "{{route('calendar.dropevents')}}",
+                            method: "post",
+                            data: {
+                                id: id_event,
+                                resourceId:resource,
+                                start: start,
+                                end: end,
+                                _token: _token
+                            },
+                            success: function (result) {
+                               alert('deu bom');
+                            }
+                        });
+                    }
                 },
                 eventResize: function (info) {
-                    alert('clicked ' + info.dateStr);
-                }
+                    let id_event = info.event._def['publicId'];
+                    let _token = document.getElementsByName("_token")[0].value;
+                    let end = moment(info.event.endStr).format('YYYY-MM-DD\THH:mm');
+
+                    $.ajax({
+                        url: "{{route('calendar.resizeevents')}}",
+                        method: "post",
+                        data: {
+                            id: id_event,
+                            end: end,
+                            _token: _token
+                        },
+                        success: function (result) {
+                            alert("atualização ok");
+                        }
+                    });
+                },
             });
             calendar.render();
         });
@@ -130,7 +171,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleColorInput" class="form-label">Status</label>
-                        <select class="form-select" aria-label="Default select example" id="create_status" name="status" required>
+                        <select class="form-select" aria-label="Default select example" id="create_status" name="status"
+                                required>
                             <option value="1">Pending</option>
                             <option value="2">Confirmed</option>
                             <option value="3">Canceled</option>
@@ -138,7 +180,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleColorInput" class="form-label">Resource</label>
-                        <select class="form-select" aria-label="Default select example" id="create_resource" name="resourceId" required>
+                        <select class="form-select" aria-label="Default select example" id="create_resource"
+                                name="resourceId" required>
                             <option value="a">A</option>
                             <option value="b">B</option>
                         </select>
@@ -194,7 +237,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleColorInput" class="form-label">Status</label>
-                        <select class="form-select" aria-label="Default select example" id="update-status" name="status" required>
+                        <select class="form-select" aria-label="Default select example" id="update-status" name="status"
+                                required>
                             <option value="1">Pending</option>
                             <option value="2">Confirmed</option>
                             <option value="3">Canceled</option>
@@ -202,7 +246,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleColorInput" class="form-label">Resource</label>
-                        <select class="form-select" aria-label="Default select example" id="update-resource" name="resourceId" required>
+                        <select class="form-select" aria-label="Default select example" id="update-resource"
+                                name="resourceId" required>
                             <option value="a">A</option>
                             <option value="b">B</option>
                         </select>
