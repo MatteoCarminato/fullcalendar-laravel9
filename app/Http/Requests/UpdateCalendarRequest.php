@@ -13,7 +13,7 @@ class UpdateCalendarRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class UpdateCalendarRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "id" => "required",
+            "title" => "required",
+            "description" =>"required",
+            "color" => "required",
+            "status" => "required",
+            "start" => "required",
+            "end" => "required",
+            "resourceId" => "required"
         ];
     }
 }

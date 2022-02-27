@@ -18,5 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('calendar', CalendarController::class)->except(['create']);
-Route::get('getevents', [CalendarController::class, 'getEvents'])->name('getEvents');
+Route::controller(CalendarController::class)->group(function () {
+    Route::resource('calendar', CalendarController::class)->only(['index','edit','store']);
+    Route::get('getevents','getEvents')->name('calendar.getevents');
+    Route::put('update/events','updateEvents')->name('calendar.updateevents');
+});
+

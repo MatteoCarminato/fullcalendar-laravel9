@@ -6,12 +6,12 @@ use App\Http\Requests\GetCalendarRequest;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
 use App\Http\Resources\CalendarCollection;
+use App\Http\Resources\CalendarResource;
 use App\Models\Calendar;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 
 class CalendarController extends Controller
 {
@@ -38,48 +38,14 @@ class CalendarController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param Calendar $calendar
-     * @return Response
-     */
-    public function show(Calendar $calendar)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param Calendar $calendar
-     * @return Response
+     * @return CalendarResource
      */
     public function edit(Calendar $calendar)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateCalendarRequest $request
-     * @param Calendar $calendar
-     * @return Response
-     */
-    public function update(UpdateCalendarRequest $request, Calendar $calendar)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Calendar $calendar
-     * @return Response
-     */
-    public function destroy(Calendar $calendar)
-    {
-        //
+        return new CalendarResource($calendar);
     }
 
     public function getEvents(GetCalendarRequest $request)
@@ -88,5 +54,12 @@ class CalendarController extends Controller
         return Calendar::whereDate('start', '>=', $date['start'])
             ->whereDate('end', '<=', $date['end'])
             ->get();
+    }
+
+    public function updateEvents(UpdateCalendarRequest $request)
+    {
+        Calendar::where('id', $request->id)
+            ->update($request->validated());
+        return to_route('calendar.index');
     }
 }
